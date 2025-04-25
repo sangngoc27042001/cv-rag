@@ -1,0 +1,9 @@
+PyPDF2
+openai
+python-dotenv
+ipykernel
+pymongo
+fastapi
+uvicorn
+requests
+python-multipart
