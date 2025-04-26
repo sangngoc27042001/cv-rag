@@ -58,28 +58,9 @@ You can access the interactive API documentation at `http://localhost:8000/docs`
 POST /cv/upload
 ```
 
-Upload a CV in PDF format.
+Uploads a CV in PDF format, extracts information using OpenAI, and stores it in MongoDB.
 
-**Request:**
-- Form data with a file field named "file" containing the PDF file.
-
-**Response:**
-```json
-{
-  "message": "CV uploaded successfully",
-  "data": {
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "phone": "+1234567890",
-    "year_of_birth": 1990,
-    "year_of_experience": 5,
-    "roles": ["Software Engineer", "Backend Developer"],
-    "english_level": "Advanced",
-    "skills": ["Python", "JavaScript", "SQL", "Django", "Flask"],
-    "companies": ["ABC Corp", "XYZ Inc"]
-  }
-}
-```
+![CV Upload Sequence Diagram](images/handle_cv_upload.png)
 
 ### Search CV
 
@@ -87,34 +68,9 @@ Upload a CV in PDF format.
 POST /cv/search
 ```
 
-Search for CVs based on natural language input.
+Searches for CVs based on natural language input, using OpenAI to parse search criteria and MongoDB to find matching documents.
 
-**Request:**
-```json
-{
-  "user_input": "Find me a software engineer with 5 years of experience in Python and Django"
-}
-```
-
-**Response:**
-```json
-{
-  "message": "Search completed",
-  "data": [
-    {
-      "name": "John Doe",
-      "email": "john.doe@example.com",
-      "phone": "+1234567890",
-      "year_of_birth": 1990,
-      "year_of_experience": 5,
-      "roles": ["Software Engineer", "Backend Developer"],
-      "english_level": "Advanced",
-      "skills": ["Python", "JavaScript", "SQL", "Django", "Flask"],
-      "companies": ["ABC Corp", "XYZ Inc"]
-    }
-  ]
-}
-```
+![CV Search Sequence Diagram](images/handle_cv_search_by_user_query.png)
 
 ## Development
 

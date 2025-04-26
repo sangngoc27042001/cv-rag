@@ -29,6 +29,7 @@ def get_cv_by_general_search(
     yoe_lower_bound: int = None,
     yoe_upper_bound: int = None,
     skills: list[str] = [],
+    other_skills: list[str] = [],
     english_level: str = None,
     roles: list[str] = [],
 ):
@@ -53,7 +54,12 @@ def get_cv_by_general_search(
     # Add skills filter (using $all to match all specified skills)
     # This ensures that the record's skills include all the skills in the query
     if skills and len(skills) > 0:
-        query["skills"] = {"$all": skills}
+        query["tech_skills"] = {"$all": skills}
+    
+    # Add other skills filter (using $all to match all specified other skills)
+    # This ensures that the record's other skills include all the other skills in the query
+    if other_skills and len(other_skills) > 0:
+        query["other_skills"] = {"$all": other_skills}
     
     # Add english level filter (exact match)
     if english_level:
@@ -81,7 +87,8 @@ def get_cv_by_user_input(user_input: str):
         name=cv_object.name,
         yoe_lower_bound=cv_object.yoe_lower_bound,
         yoe_upper_bound=cv_object.yoe_upper_bound,
-        skills=cv_object.skills,
+        skills=cv_object.tech_skills,
+        other_skills=cv_object.other_skills,
         english_level=cv_object.english_level,
         roles=cv_object.roles
     )

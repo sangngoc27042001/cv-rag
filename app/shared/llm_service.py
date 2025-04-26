@@ -1,10 +1,17 @@
 from openai import OpenAI
-from dotenv import load_dotenv
+from ..config import setting
 
-load_dotenv()
+client = OpenAI(
+  api_key=setting.OPENAI_API_KEY,  # Replace with your OpenAI API key
+  base_url="https://oai.helicone.ai/v1",  # Set the API endpoint
+  default_headers= {  # Optionally set default headers or set per request (see below)
+    "Helicone-Auth": f"Bearer {setting.HELICONE_API_KEY}",
+  }
+)
+
 
 def get_response(user: str, system: str, chat_history: list[dict], model:str="gpt-4o-mini") -> str:
-    client = OpenAI()
+    
     response = client.chat.completions.create(
         model=model,
         messages=
@@ -16,7 +23,6 @@ def get_response(user: str, system: str, chat_history: list[dict], model:str="gp
 
 def get_parsed_response(user: str, system: str, response_format, model:str="gpt-4o-mini", json_dump:bool=True) -> dict:
     
-    client = OpenAI()
     response = client.beta.chat.completions.parse(
         model=model,
         messages=[

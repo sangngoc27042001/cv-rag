@@ -23,7 +23,17 @@ async def upload_cv_endpoint(file: UploadFile = File(...)):
     """
     if not file.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+    file_content = await file.read()
     
+    # Process the CV
+    cv_data = upload_cv(file_content)
+    # Serialize the MongoDB document to a JSON-serializable format
+    cv_data = serialize_mongo_doc(cv_data)
+
+    return JSONResponse(
+        status_code=200,
+        content={"message": "CV uploaded successfully", "data": cv_data}
+    )
     try:
         # Read the file content
         file_content = await file.read()
